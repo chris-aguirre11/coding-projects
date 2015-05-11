@@ -19,7 +19,9 @@ public class IntPriorityQueueUsingHeap {
 		heapArray[currentSize++] = item;
 		
 		while(heapArray[newElementIndex] > heapArray[computeParentIndex(newElementIndex)]) {
+			System.out.println("\t" + this.toString() + "\t BEFORE");
 			swap(newElementIndex, computeParentIndex(newElementIndex));
+			System.out.println("\t" + this.toString() + "\t AFTER");
 			newElementIndex = computeParentIndex(newElementIndex);
 		}
 	}
@@ -70,7 +72,7 @@ public class IntPriorityQueueUsingHeap {
 	}
 	
 	public static void main(String[] args) {
-		IntPriorityQueueUsingHeap queue = new IntPriorityQueueUsingHeap(4);
+		IntPriorityQueueUsingHeap queue = new IntPriorityQueueUsingHeap(10);
 		queue.enQueue(2);
 		System.out.println(queue.toString());
 		
@@ -82,6 +84,18 @@ public class IntPriorityQueueUsingHeap {
 		
 		queue.enQueue(1);
 		System.out.println(queue.toString());
+		
+		queue.enQueue(6);
+		System.out.println(queue.toString());
+		
+		queue.enQueue(34);
+		System.out.println(queue.toString());
+		
+		queue.enQueue(3);
+		System.out.println(queue.toString());
+		
+//		queue.deQueue();
+//		System.out.println(queue.toString());
 		
 	}
 	
@@ -96,5 +110,4 @@ public class IntPriorityQueueUsingHeap {
 		
 		return sb.toString();
 	}
-
 }
