@@ -19,44 +19,52 @@ public class IntPriorityQueueUsingHeap {
 		heapArray[currentSize++] = item;
 		
 		while(heapArray[newElementIndex] > heapArray[computeParentIndex(newElementIndex)]) {
-			System.out.println("\t" + this.toString() + "\t BEFORE");
+			System.out.println("\t" + this.toString() + "\t BEFORE ENQUEUE");
 			swap(newElementIndex, computeParentIndex(newElementIndex));
-			System.out.println("\t" + this.toString() + "\t AFTER");
+			System.out.println("\t" + this.toString() + "\t AFTER ENQUEUE");
 			newElementIndex = computeParentIndex(newElementIndex);
 		}
 	}
 	
 	public int deQueue() {
 		int deQueuedValue = heapArray[0];
-		heapArray[0] = heapArray[currentSize - 1];
+		heapArray[0] = heapArray[currentSize-1];
+		heapArray[currentSize - 1] = 0;
 		int currentElement = 0;
 		
-		while( (heapArray[currentElement] < heapArray[computeLeftChild(currentElement)]) 
-				|| (heapArray[currentElement] < heapArray[computeRightChild(currentElement)])
+		while( (heapArray[currentElement] < heapArray[computeLeftChildIndex(currentElement)]) 
+				|| (heapArray[currentElement] < heapArray[computeRightChildIndex(currentElement)])
 				
 				) {
-			swap(currentElement, computeHighPriorityChildIndex(currentElement));
-			currentElement = computeHighPriorityChildIndex(currentElement);
+			
+			
+			int highPriorityChildIndex = computeHighPriorityChildIndex(currentElement);
+			
+			System.out.println("\t" + this.toString() + "\t BEFORE DEQUEUE");
+			swap(currentElement, highPriorityChildIndex);
+			System.out.println("\t" + this.toString() + "\t AFTER DEQUEUE");
+			currentElement = highPriorityChildIndex;
 		}
+		currentSize--;
 		return deQueuedValue;
 	}
 	
-	private int computeLeftChild(int node) {
+	private int computeLeftChildIndex(int node) {
 		return (2*node) + 1;
 	}
 	
-	private int computeRightChild(int node) {
+	private int computeRightChildIndex(int node) {
 		return (2*node) + 2;
 	}
 	
 	private int computeHighPriorityChildIndex(int node) {
-		int leftChildValue = computeLeftChild(node);
-		int rightChildValue = computeRightChild(node);
+		int leftChildValue = heapArray[computeLeftChildIndex(node)];
+		int rightChildValue = heapArray[computeRightChildIndex(node)];
 		
 		if(leftChildValue > rightChildValue)
-			return computeLeftChild(node);
+			return computeLeftChildIndex(node);
 		else
-			return computeRightChild(node);
+			return computeRightChildIndex(node);
 	}
 	 
 	private int computeParentIndex(int node) {
@@ -72,7 +80,7 @@ public class IntPriorityQueueUsingHeap {
 	}
 	
 	public static void main(String[] args) {
-		IntPriorityQueueUsingHeap queue = new IntPriorityQueueUsingHeap(10);
+		IntPriorityQueueUsingHeap queue = new IntPriorityQueueUsingHeap(15);
 		queue.enQueue(2);
 		System.out.println(queue.toString());
 		
@@ -94,9 +102,17 @@ public class IntPriorityQueueUsingHeap {
 		queue.enQueue(3);
 		System.out.println(queue.toString());
 		
-//		queue.deQueue();
-//		System.out.println(queue.toString());
+		queue.deQueue();
+		System.out.println(queue.toString());
 		
+		queue.deQueue();
+		System.out.println(queue.toString());
+		
+		queue.deQueue();
+		System.out.println(queue.toString());
+		
+		queue.enQueue(88);
+		System.out.println(queue.toString());
 	}
 	
 	@Override
