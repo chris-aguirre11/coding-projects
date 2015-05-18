@@ -1,18 +1,19 @@
 package sorting;
 
-public class SelectionSort {
+public class InsertionSort {
 	
 	//Included to show how selectionSort executes much less swaps as compared to insertionSort
 	public static int numOfSwapsThatOccurred = 0;
 	
-	public static void selectionSort(int[] inputArray, int startIndex, int endIndex) {
-		if( (startIndex < 0) || (endIndex > inputArray.length))
+	public static void insertionSort(int[] inputArray, int startIndex, int endIndex) {
+		//TODO Do a better job of handling 0 as startIndex
+		if( (startIndex < 1) || (endIndex > inputArray.length))
 			throw new IllegalArgumentException("startIndex or endIndex is invalid!");
 		
-		for(int i = startIndex; i < endIndex; i++) {
-			for(int y = i + 1; y <= endIndex; y++) {
-				if(inputArray[y] < inputArray[i]) {
-					swapArrayElements(i, y, inputArray);
+		for(int i = startIndex + 1; i <= endIndex; i++) {
+			for(int y = i; y > 0; y--) {
+				if(inputArray[y] < inputArray[y-1]) {
+					swapArrayElements(y-1, y, inputArray);
 				}
 			}
 		}
