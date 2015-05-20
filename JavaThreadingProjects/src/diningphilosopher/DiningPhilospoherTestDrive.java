@@ -4,6 +4,9 @@ package diningphilosopher;
  * References Which Helped: 
  * 	- http://stackoverflow.com/questions/27084579/dining-philosophers-using-semaphores
  * 	- Preventing Deadlock: http://homes.cs.washington.edu/~arvind/cs422/lectureNotes/deadlock-6.pdf
+ * 
+ * Used JConsole to verify no deadlock nor starvation: JDK_HOME/bin/jconsole.exe
+ * 
  * TODO To Make It Better: 
  * 	- Implement a GUI with ability to slow down speed so we can see it
  * 	- Use a TimerTask to slow/speed up program
