@@ -9,16 +9,34 @@ import java.util.Random;
 public class QuickSort {
 
 	public static void main(String[] args) {
-		int[] data = {7, 4, 8, 8, 17, 21, 4, -4, -3, -4, -4, 2, 8};
+//		int[] data = {7, 4, 8, 8, 17, 21, 4, -4, -3, -4, -4, 2, 8};
+		int[] data = {56, 8, 12, 0, 0, 0, 34, -1, 2, -2, -1, -3, 3, 88, 4};
 		
 		printArrayContents(data);
-		partition(data, 0, data.length-1);
+		partition(data, 0, data.length, 9);
 		printArrayContents(data);
 	}
 	
-	private static void partition(int[] data, int first, int n) {
+	/**
+	 * Partition the array by making the pivotIndex the median of 3 random array indexes.
+	 *  More Efficient - Good Way to Choose a Pivot
+	 */
+	public static void partition(int[] data, int first, int n) {
 		int pivotIndex = selectMedianIndexFrom3RandomElements(data);
 		int pivotValue = data[pivotIndex];
+		executePartition(data, first, n, pivotIndex, pivotValue);
+	}
+	
+	/**
+	 * Partition the array based on some pre-determined pivotIndex.
+	 *  Not Very Efficient - Bad Way to Choose a Pivot
+	 */
+	public static void partition(int[] data, int first, int n, int pivotIndex) {
+		int pivotValue = data[pivotIndex];
+		executePartition(data, first, n, pivotIndex, pivotValue);
+	}
+	
+	private static void executePartition(int[] data, int first, int n,  int pivotIndex, int pivotValue) {
 		int tooBigIndex = first;
 		int tooSmallIndex = first + n -1;
 		
@@ -26,17 +44,17 @@ public class QuickSort {
 			   (tooSmallIndex >= first) &&
 			   (tooBigIndex <= tooSmallIndex) ) {
 			
-			while(tooBigIndex <= pivotValue)
+			while(data[tooBigIndex] <= pivotValue)
 				tooBigIndex++;
-			while(tooSmallIndex > pivotValue)
+			while(data[tooSmallIndex] > pivotValue)
 				tooSmallIndex--;
 			
-			swapArrayElements(data, tooBigIndex, tooSmallIndex);
+			if(tooBigIndex < tooSmallIndex)
+				swapArrayElements(data, tooBigIndex, tooSmallIndex);
 		}
 		
-		swapArrayElements(data, pivotIndex, tooBigIndex);
+		swapArrayElements(data, pivotIndex, tooSmallIndex);
 		pivotIndex = tooSmallIndex;
-		pivotValue = data[tooSmallIndex];
 	}
 	
 	private static void swapArrayElements(int[] inputArray, int index1, int index2) {
@@ -57,7 +75,7 @@ public class QuickSort {
 			System.out.print(n + "\t");
 		}
 		
-		// Switch to use my own InsetionSort
+		//TODO: Switch to use my own InsertionSort
 		Arrays.sort(randomIndexesArray);
 		
 		System.out.println("\nrandomIndexesArray after sort: ");
@@ -69,7 +87,7 @@ public class QuickSort {
 	}
 	
 	private static void printArrayContents(int[] data) {
-		System.out.println("arrayContents: ");
+		System.out.println("\narrayContents: ");
 		for(int n: data) {
 			System.out.print(n + "\t");
 		}
