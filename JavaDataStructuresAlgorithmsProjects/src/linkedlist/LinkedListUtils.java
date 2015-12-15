@@ -7,8 +7,8 @@ public class LinkedListUtils {
 		Node slowIterator = head;
 		Node fastIterator = head;
 		
-		while( 	(slowIterator.getNextNode() != null) ||
-				(fastIterator.getNextNode() != null) ||
+		while( 	(slowIterator.getNextNode() != null) &&
+				(fastIterator.getNextNode() != null) &&
 				(fastIterator.getNextNode().getNextNode() != null)) {
 			
 			slowIterator = slowIterator.getNextNode();
