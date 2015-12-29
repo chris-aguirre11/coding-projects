@@ -2,13 +2,18 @@ package puzzles;
 
 import stack.StackUsingLL;
 
+/**
+ * This program solves the class Towers of Hanoi problem
+ *  for 3 Rods and N Disks 
+ *  
+ *  References Used:
+ *  	https://en.wikipedia.org/wiki/Tower_of_Hanoi
+ *  	iPhone App: The Towers of Hanoi by gruv-apps in order to solve by hand 
+ */
 public class TowersOfHanoi {
 	
-	//TODO Remove comments and note down errors separately
-	//TODO Left off: Need to get printCurrentGameStatus() then can continue stepping through and getting it working.
-	
 	public static void main(String[] args) {
-		TowersOfHanoi.solve(4);
+		TowersOfHanoi.solve(5);
 	}
 	
 	public static void solve(int nDisks) {
@@ -28,66 +33,80 @@ public class TowersOfHanoi {
 			else
 				followOddRules(s1, s2, s3);
 		}
-		
 	}
 	
 	private static void followEvenRules(StackUsingLL s1, StackUsingLL s2,
 			StackUsingLL s3) {
-		peekAndExecuteMove(s1, s2);
-		peekAndExecuteMove(s1, s3);
-		peekAndExecuteMove(s2, s3);
+		if(!peekAndExecuteMove(s1, s2))
+			return;
+		
+		if(!peekAndExecuteMove(s1, s3))
+			return;
+		
+		if(!peekAndExecuteMove(s2, s3))
+			return;
 	}
 
 
 	private static void followOddRules(StackUsingLL s1, StackUsingLL s2,
 			StackUsingLL s3) {
-		peekAndExecuteMove(s1, s3);
-		peekAndExecuteMove(s1, s2);
-		peekAndExecuteMove(s2, s3);
+		if(!peekAndExecuteMove(s1, s3))
+			return;
+		
+		if(!peekAndExecuteMove(s1, s2))
+			return;
+		
+		if(!peekAndExecuteMove(s2, s3))
+			return;
 	}
 	
-	private static void peekAndExecuteMove(StackUsingLL s1, StackUsingLL s2) {
-		if( (s1.peek() == null) && (s2.peek() != null) ) {	//Error - Didn't use peek() but used peek
-			String popped = (String) s2.pop();		// Error - Didn't cast Object to String again
+	private static boolean peekAndExecuteMove(StackUsingLL s1, StackUsingLL s2) {
+		if( (s1.peek() == null) && (s2.peek() != null) ) {
+			String popped = (String) s2.pop();	
 			s1.push(popped);
 		}
-		
-		if( (s2.peek() == null) && (s1.peek() != null) ) {	//Error - Didn't use peek() but used peek
-			String popped = (String) s1.pop();		// Error - Didn't cast Object to String again
+		else if( (s2.peek() == null) && (s1.peek() != null) ) {	
+			String popped = (String) s1.pop();		
 			s2.push(popped);
 		}
-		
-		if( s1.peek().toString().length() < s2.peek().toString().length() ) {
-			String popped = (String) s1.pop();		// Error - Didn't cast Object to String again
+		else if( (s2.peek() == null) && (s1.peek() == null) ) {	
+			return false;
+		}
+		else if( s1.peek().toString().length() < s2.peek().toString().length() ) {
+			String popped = (String) s1.pop();		
 			s2.push(popped);
 		}
 		else {
 			String popped = (String) s2.pop();		
 			s1.push(popped);
 		}
+		return true;
 		
 	}
 	
 	private static boolean gameIsOver(int nDisks, StackUsingLL s1, StackUsingLL s2,
 			StackUsingLL s3) {
+		
 		printCurrentGameStatus(nDisks, s1, s2, s3);
 		
-		if(s3.getCurrentSize() != nDisks)					//Error - I used size() on paper bc I didn't know exact method name...OK though
+		if(s3.getCurrentSize() != nDisks)			
 			return false;
 		
 		String[] s3Disks = new String[nDisks];
 		int index = 0;
 		while(s3.peek() != null) {
-			s3Disks[index] = (String) s3.pop();		//Error I did not cast from Object to String...so I need to know what kind of objects the Stack stores
+			s3Disks[index] = (String) s3.pop();		
 			index++;
 		}
 		
-		int currentSize = s3Disks[0].length();		//Error - I used wrong String method...I used size() instead of length() - remember this
+		int currentSize = s3Disks[0].length();
 		
 		for(int i = 1; i < s3Disks.length; i++) {
 			int nextSize = s3Disks[i].length();
-			if(nextSize != currentSize + 1) 
+			if(nextSize != currentSize + 1) {
 				return false;
+			}
+			currentSize = nextSize;
 		}
 		
 		for(int i = s3Disks.length - 1; i >= 0; i--) {
@@ -102,18 +121,11 @@ public class TowersOfHanoi {
 		String[] s1Contents = new String[nDisks];
 		String[] s2Contents = new String[nDisks];
 		String[] s3Contents = new String[nDisks];
-		
-		// Fill these arrays with empty Strings so no Null Issues Happen Later on
-		for(int i = 0; i < s1Contents.length; i++) {
-			s1Contents[i] = "";
-			s2Contents[i] = "";
-			s3Contents[i] = "";
-		}
-		
+
 		// Pop all Stack contents into 3 corresponding arrays
 		int index = 0;
-		while(s1.peek() != null) {					//Had a problem here because my stack did not return Null..
-			s1Contents[index] = (String) s1.pop();	// had to make a change to Stack class, always make sure to properly return or notify clients of a Null
+		while(s1.peek() != null) {					
+			s1Contents[index] = (String) s1.pop();
 			index++;
 		}
 		
@@ -131,21 +143,49 @@ public class TowersOfHanoi {
 		
 		// Perform Console Print
 		for(int i = 0; i < s1Contents.length; i++) {
-//			System.out.println(s1Contents[i] + "\t\t\t" + s2Contents[i] + "\t\t\t" + s3Contents[i]);
-			System.out.println(s1Contents[i] + "\t\t\t");
+			
+			String s1ContentsCurrentValue = null;
+			if(s1Contents[i] == null)
+				s1ContentsCurrentValue = "-";
+			else
+				s1ContentsCurrentValue = s1Contents[i];
+			
+			String s2ContentsCurrentValue = null;
+			if(s2Contents[i] == null)
+				s2ContentsCurrentValue = "-";
+			else
+				s2ContentsCurrentValue = s2Contents[i];
+			
+			String s3ContentsCurrentValue = null;
+			if(s3Contents[i] == null)
+				s3ContentsCurrentValue = "-";
+			else
+				s3ContentsCurrentValue = s3Contents[i];
+			
+			System.out.println(s1ContentsCurrentValue + "\t\t\t" + s2ContentsCurrentValue + "\t\t\t" + s3ContentsCurrentValue);
 		}
+		System.out.println();
 		
 		// Push all Stack contents back onto the 3 Stacks
 		for(int i = s1Contents.length - 1; i >= 0; i--) {
-			s1.push(s1Contents[i]);
+			if(s1Contents[i] == null)
+				continue;
+			else
+				s1.push(s1Contents[i]);
 		}
 		
 		for(int i = s2Contents.length - 1; i >= 0; i--) {
-			s2.push(s2Contents[i]);
+			if(s2Contents[i] == null)
+				continue;
+			else
+				s2.push(s2Contents[i]);
 		}
 		
 		for(int i = s3Contents.length - 1; i >= 0; i--) {
-			s3.push(s3Contents[i]);
+			if(s3Contents[i] == null)
+				continue;
+			else
+				s3.push(s3Contents[i]);
 		}
 	}
 
@@ -157,11 +197,8 @@ public class TowersOfHanoi {
 			for(int y = 1; y <= i; y++) {
 				sb.append("X");
 			}
-			diskStrings[i -1] = sb.toString();		// Error - Didn't convert SB to String on paper
+			diskStrings[i -1] = sb.toString();
 		}
 		return diskStrings;
 	}
-	
-	
-
 }
