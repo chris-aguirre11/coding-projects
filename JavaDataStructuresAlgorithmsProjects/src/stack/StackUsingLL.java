@@ -35,7 +35,10 @@ public class StackUsingLL {
 	}
 	
 	public Object peek() {
-		return head.getValue();
+		if(isEmpty())
+			return null;
+		else
+			return head.getValue();
 	}
 	
 	public int getCurrentSize() {
