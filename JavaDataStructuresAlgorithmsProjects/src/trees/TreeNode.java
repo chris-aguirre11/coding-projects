@@ -58,24 +58,22 @@ public class TreeNode<T> {
 		if(root.getRightChild() != null)
 			deepestLeafOfRightSubTree = deepestRootDistance(root.getRightChild());
 		
-		int difference = Math.abs(deepestLeafOfLeftSubTree - deepestLeafOfRightSubTree);
-		if(difference > 1) return false;
-		else return true;
+		return (Math.abs(deepestLeafOfLeftSubTree - deepestLeafOfRightSubTree) > 1) ? false : true;
 	}
 
 	private static int deepestRootDistance(TreeNode<?> node) {
 		int deepestLeftCount = 0, deepestRightCount = 0;
 		
-		if(node.isLeaf()) return 1;
-		else if(node.getLeftChild() != null)
+		if(node.isLeaf()) return 1;			//mistake with if - else if - else if(this did not execute)
+		if(node.getLeftChild() != null)
 			deepestLeftCount = 1 + deepestRootDistance(node.getLeftChild());
-		else if(node.getRightChild() != null)
+		if(node.getRightChild() != null)
 			deepestRightCount = 1 + deepestRootDistance(node.getRightChild());
 		
 		if(deepestLeftCount >= deepestRightCount) return deepestLeftCount;
 		else return deepestRightCount;
 	}
-
+	
 	public static void main(String[] args) {
 		TreeNode<Character> firstleftChild = new TreeNode<>('L', null, null);
 		TreeNode<Character> firstRightChild = new TreeNode<>('G', null, null);
@@ -85,5 +83,5 @@ public class TreeNode<T> {
 		rootNode.getLeftChild().setRightChild(new TreeNode<>('R', null, null));
 		
 		rootNode.getRightChild().setRightChild(new TreeNode<>('T', null, null));
-	}
+	}	
 }
