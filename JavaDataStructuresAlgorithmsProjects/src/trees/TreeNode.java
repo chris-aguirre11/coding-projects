@@ -2,9 +2,6 @@ package trees;
 
 public class TreeNode<T> {
 	
-	//TODO create neat printMethod for easy Viewing
-	// Proceed to try problems using this Tree
-	
 	private T data;
 	private TreeNode<T> leftChild;
 	private TreeNode<T> rightChild;
@@ -50,15 +47,43 @@ public class TreeNode<T> {
 	    	 rightChild.postOrderPrint();
 	     System.out.println(data);
 	}
+	
+	public static boolean isBalanced(TreeNode<?> root) {
+		
+		int deepestLeafOfLeftSubTree = 0,  deepestLeafOfRightSubTree = 0;
+		
+		if(root.getLeftChild() != null)
+			deepestLeafOfLeftSubTree = deepestRootDistance(root.getLeftChild());
+		
+		if(root.getRightChild() != null)
+			deepestLeafOfRightSubTree = deepestRootDistance(root.getRightChild());
+		
+		int difference = Math.abs(deepestLeafOfLeftSubTree - deepestLeafOfRightSubTree);
+		if(difference > 1) return false;
+		else return true;
+	}
+
+	private static int deepestRootDistance(TreeNode<?> node) {
+		int deepestLeftCount = 0, deepestRightCount = 0;
+		
+		if(node.isLeaf()) return 1;
+		else if(node.getLeftChild() != null)
+			deepestLeftCount = 1 + deepestRootDistance(node.getLeftChild());
+		else if(node.getRightChild() != null)
+			deepestRightCount = 1 + deepestRootDistance(node.getRightChild());
+		
+		if(deepestLeftCount >= deepestRightCount) return deepestLeftCount;
+		else return deepestRightCount;
+	}
 
 	public static void main(String[] args) {
 		TreeNode<Character> firstleftChild = new TreeNode<>('L', null, null);
 		TreeNode<Character> firstRightChild = new TreeNode<>('G', null, null);
-		TreeNode<Character> headNode = new TreeNode<>('A', firstleftChild, firstRightChild);
+		TreeNode<Character> rootNode = new TreeNode<>('A', firstleftChild, firstRightChild);
 		
-		headNode.getLeftChild().setLeftChild(new TreeNode<>('O', null, null));
-		headNode.getLeftChild().setRightChild(new TreeNode<>('R', null, null));
+		rootNode.getLeftChild().setLeftChild(new TreeNode<>('O', null, null));
+		rootNode.getLeftChild().setRightChild(new TreeNode<>('R', null, null));
 		
-		headNode.getRightChild().setRightChild(new TreeNode<>('T', null, null));
+		rootNode.getRightChild().setRightChild(new TreeNode<>('T', null, null));
 	}
 }

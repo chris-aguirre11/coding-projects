@@ -27,6 +27,9 @@ public class TreeViewer extends JApplet {
 		headNode.getLeftChild().getLeftChild().getRightChild().setLeftChild(new TreeNode<>('T', null, null));
 		headNode.getLeftChild().getLeftChild().getRightChild().setRightChild(new TreeNode<>('B', null, null));
 		
+		System.out.println(TreeNode.isBalanced(headNode));
+		
+		System.out.println(TreeNode.isBalanced(headNode.getLeftChild().getLeftChild().getRightChild()));		
 		
 		copyMyTreeToJavaTreeNode(headNode);
 		jTree.setShowsRootHandles(true);
@@ -43,17 +46,17 @@ public class TreeViewer extends JApplet {
 	 * Java's DefaultMutableTreeNode in order to utilize JTree
 	 * for easy viewing
 	 */
-	public DefaultMutableTreeNode copyMyTreeToJavaTreeNode(TreeNode<?> headNode) {
+	public DefaultMutableTreeNode copyMyTreeToJavaTreeNode(TreeNode<?> rootNode) {
 		
 		DefaultMutableTreeNode leftChild, rightChild;
 		
-		if(headNode == null)
+		if(rootNode == null)
 			return null;
 		
 		else {
-			leftChild = copyMyTreeToJavaTreeNode(headNode.getLeftChild());
-			rightChild = copyMyTreeToJavaTreeNode(headNode.getRightChild());
-			DefaultMutableTreeNode current = new DefaultMutableTreeNode(headNode.getData());
+			leftChild = copyMyTreeToJavaTreeNode(rootNode.getLeftChild());
+			rightChild = copyMyTreeToJavaTreeNode(rootNode.getRightChild());
+			DefaultMutableTreeNode current = new DefaultMutableTreeNode(rootNode.getData());
 			
 			int counter = 0;
 			if(leftChild != null) {
