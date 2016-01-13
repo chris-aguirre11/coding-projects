@@ -60,7 +60,5 @@ public class TreeNode<T> {
 		headNode.getLeftChild().setRightChild(new TreeNode<>('R', null, null));
 		
 		headNode.getRightChild().setRightChild(new TreeNode<>('T', null, null));
-		
-		headNode.preOrderPrint();
 	}
 }
