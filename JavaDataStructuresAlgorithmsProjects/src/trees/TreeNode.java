@@ -1,10 +1,13 @@
 package trees;
 
+import java.util.LinkedList;
+
 public class TreeNode<T> {
 	
 	private T data;
 	private TreeNode<T> leftChild;
 	private TreeNode<T> rightChild;
+	private boolean isMarked;
 	
 	public TreeNode(T initialData, TreeNode<T> initialLeft, TreeNode<T> initialRight) {
 		data = initialData;
@@ -48,6 +51,49 @@ public class TreeNode<T> {
 	     System.out.println(data);
 	}
 	
+
+	/**
+	 * @param node
+	 * @param isBreadthFirst
+	 * This method can be used to perform either a breadthFirst or DepthFirstSearch of tree.
+	 * if isBreadthFirst (uses queue) is false the search used will be depthFirst (uses stack)
+	 */
+	public static void treeSearch(TreeNode<?> node, boolean isBreadthFirst) {	
+		LinkedList<TreeNode<?>> queue = new LinkedList<TreeNode<?>>();
+		queue.add(node);
+		search(node, queue, isBreadthFirst);
+	}
+	
+	private static void search(TreeNode<?> node, LinkedList<TreeNode<?>> queue, boolean isBreadthFirst) {
+		processAndMarkNode(node);
+		
+		TreeNode<?> current = queue.removeFirst();
+		TreeNode<?> currentLeftChild = current.getLeftChild();
+		TreeNode<?> currentRightChild = current.getRightChild();
+		
+		if( (currentLeftChild != null) && (!currentLeftChild.isMarked) ) {
+			if(isBreadthFirst)
+				queue.add(currentLeftChild);
+			else
+				queue.addFirst(currentLeftChild);
+		}
+			
+		if( (currentRightChild != null) && (!currentRightChild.isMarked) ) {
+			if(isBreadthFirst)
+				queue.add(currentRightChild);
+			else
+				queue.addFirst(currentRightChild);
+		}
+			
+		while(!queue.isEmpty())
+			search(queue.peekFirst(), queue, isBreadthFirst);
+	}
+
+	private static void processAndMarkNode(TreeNode<?> node) {
+		System.out.println(node.getData());
+		node.isMarked = true;
+	}
+
 	public static boolean isBalanced(TreeNode<?> root) {
 		
 		int deepestLeafOfLeftSubTree = 0,  deepestLeafOfRightSubTree = 0;
@@ -64,7 +110,7 @@ public class TreeNode<T> {
 	private static int deepestRootDistance(TreeNode<?> node) {
 		int deepestLeftCount = 0, deepestRightCount = 0;
 		
-		if(node.isLeaf()) return 1;			//mistake with if - else if - else if(this did not execute)
+		if(node.isLeaf()) return 1;	
 		if(node.getLeftChild() != null)
 			deepestLeftCount = 1 + deepestRootDistance(node.getLeftChild());
 		if(node.getRightChild() != null)
