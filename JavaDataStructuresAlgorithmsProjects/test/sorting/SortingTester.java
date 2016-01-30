@@ -15,10 +15,17 @@ public class SortingTester {
 		
 		SelectionSort.selectionSort(arrayToSort, 3, 9);
 //		printArrayContents(arrayToSort);
-		System.out.println();
 		
 		int[] expectedSortedArray = {7,8,4,-4,-2,4,9,10,13,16};
 		Assert.assertTrue(Arrays.equals(expectedSortedArray, arrayToSort));
+		System.out.println("# of Swaps Which Occurred During SelectionSort: " + SelectionSort.numOfSwapsThatOccurred);
+		
+		
+		int[] arrayToSort2 = {3,6,8,1,5,2,7,2};
+		SelectionSort.selectionSort(arrayToSort2, 0, 7);
+
+		int[] expectedSortedArray2 = {1,2,2,3,5,6,7,8};
+		Assert.assertTrue(Arrays.equals(expectedSortedArray2, arrayToSort2));
 		System.out.println("# of Swaps Which Occurred During SelectionSort: " + SelectionSort.numOfSwapsThatOccurred);
 	}
 	

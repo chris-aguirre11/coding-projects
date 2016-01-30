@@ -6,6 +6,7 @@ public class SelectionSort {
 	public static int numOfSwapsThatOccurred = 0;
 	
 	public static void selectionSort(int[] inputArray, int startIndex, int endIndex) {
+		numOfSwapsThatOccurred = 0;
 		if( (startIndex < 0) || (endIndex > inputArray.length))
 			throw new IllegalArgumentException("startIndex or endIndex is invalid!");
 		
