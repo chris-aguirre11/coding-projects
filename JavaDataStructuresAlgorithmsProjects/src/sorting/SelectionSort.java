@@ -5,25 +5,23 @@ public class SelectionSort {
 	//Included to show how selectionSort executes much less swaps as compared to insertionSort
 	public static int numOfSwapsThatOccurred = 0;
 	
-	public static void selectionSort(int[] inputArray, int startIndex, int endIndex) {
+	public static void selectionSort(int[] inputArray, int startIndex, int numElementsToSort) {
 		numOfSwapsThatOccurred = 0;
-		if( (startIndex < 0) || (endIndex > inputArray.length))
-			throw new IllegalArgumentException("startIndex or endIndex is invalid!");
+		if( (startIndex < 0) || (numElementsToSort < 0) )
+			throw new IllegalArgumentException("startIndex or numElementsToSort cannot be negative!");
 		
-		for(int i = startIndex; i < endIndex; i++) {
-			for(int y = i + 1; y <= endIndex; y++) {
-				if(inputArray[y] < inputArray[i]) {
-					swapArrayElements(i, y, inputArray);
+		if( (startIndex + numElementsToSort) > inputArray.length )
+			throw new IllegalArgumentException("Invalid numElementsToSort based on startIndex!");
+		
+		for(int i = startIndex; i < (startIndex + numElementsToSort) - 1; i++) {
+			for(int j = i + 1; j <= (startIndex + numElementsToSort) - 1; j++) {
+				if(inputArray[j] < inputArray[i]) {
+					int tmp = inputArray[i];
+					inputArray[i] = inputArray[j];
+					inputArray[j] = tmp;
+					numOfSwapsThatOccurred++;
 				}
 			}
 		}
 	}
-
-	private static void swapArrayElements(int index1, int index2, int[] inputArray) {
-		int tmp = inputArray[index1];
-		inputArray[index1] = inputArray[index2];
-		inputArray[index2] = tmp;
-		numOfSwapsThatOccurred++;
-	}
-
 }
