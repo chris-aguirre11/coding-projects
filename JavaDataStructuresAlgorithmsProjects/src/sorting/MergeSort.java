@@ -1,18 +1,6 @@
 package sorting;
 
 public class MergeSort {
-
-	public static void main(String[] args) {
-//		int[] array = new int[] {8,7};
-//		MergeSort.merge(array, 0, 2);
-//		
-//		int[] array = new int[] {7,8};
-//		MergeSort.merge(array, 0, 2);
-		
-		//TODO This scenario not working - fix it
-		int[] array = new int[] {10,8,7};
-		MergeSort.merge(array, 0, 3);
-	}
 	
 	public static void merge(int[] array, int startIndex, int nToMerge) {
 		int[] newArray = new int[nToMerge];
@@ -22,8 +10,8 @@ public class MergeSort {
 		int leftStartIndex = startIndex;
 		int originalLeftStartIndex = startIndex;
 		
-		int rightStartIndex = startIndex + rightSize;
-		int originalRightStartIndex = startIndex + rightSize;
+		int rightStartIndex = startIndex + leftSize;
+		int originalRightStartIndex = startIndex + leftSize;
 		
 		int copiedCnt = 0;
 		
@@ -41,18 +29,25 @@ public class MergeSort {
 				copiedCnt++;
 		}
 		
-		if(leftStartIndex < (startIndex + rightSize)) {
-			for(int i = leftStartIndex; i < (startIndex + rightSize); i++) {
+		//Copy any remaining items from left sub-array
+		if(leftStartIndex < originalRightStartIndex) {
+			for(int i = leftStartIndex; i < originalRightStartIndex; i++) {
 				newArray[copiedCnt] = array[i];
 				copiedCnt++;
 			}
 		}
 		
+		//Copy any remaining items from right sub-array
 		if(rightStartIndex < (originalRightStartIndex + rightSize)) {
-			for(int i = rightStartIndex; i < (rightStartIndex + rightSize); i++) {
+			for(int i = rightStartIndex; i < (originalRightStartIndex + rightSize); i++) {
 				newArray[copiedCnt] = array[i];
 				copiedCnt++;
 			}
+		}
+		
+		// Copy elements in tmp array back to original
+		for(int i = 0; i < newArray.length; i++) {
+			array[i] = newArray[i];
 		}
 	}
 }
