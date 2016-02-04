@@ -2,6 +2,19 @@ package sorting;
 
 public class MergeSort {
 	
+	public static void mergeSort(int[] array, int startIndex, int nToMerge) {
+		int leftSize = nToMerge/2;
+		int rightSize = nToMerge - leftSize;
+		
+		if(leftSize > 1)
+			mergeSort(array, startIndex, leftSize);
+
+		if(rightSize > 1)
+			mergeSort(array, (startIndex + leftSize), rightSize);
+		
+		merge(array, startIndex, nToMerge);
+	}
+	
 	public static void merge(int[] array, int startIndex, int nToMerge) {
 		int[] newArray = new int[nToMerge];
 		int leftSize = nToMerge/2;
@@ -47,7 +60,7 @@ public class MergeSort {
 		
 		// Copy elements in tmp array back to original
 		for(int i = 0; i < newArray.length; i++) {
-			array[i] = newArray[i];
+			array[startIndex + i] = newArray[i];
 		}
 	}
 }

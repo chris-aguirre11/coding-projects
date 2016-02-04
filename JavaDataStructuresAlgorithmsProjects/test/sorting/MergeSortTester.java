@@ -6,6 +6,14 @@ import org.junit.Assert;
 import org.junit.Test;
 
 public class MergeSortTester {
+	
+	@Test
+	public void testMergeSortMethodForLength8Array() {
+		int[] arrayToSort = {5,7,3,9,1,1,0,8};
+		MergeSort.mergeSort(arrayToSort, 0, 8);
+		int[] expectedSortedArray = {0,1,1,3,5,7,8,9};
+		Assert.assertTrue(Arrays.equals(expectedSortedArray, arrayToSort));
+	}
 
 	@Test
 	public void testMergeMethodForLength2Arrays() {
