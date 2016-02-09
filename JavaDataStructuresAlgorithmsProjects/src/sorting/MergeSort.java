@@ -3,6 +3,13 @@ package sorting;
 public class MergeSort {
 	
 	public static void mergeSort(int[] array, int startIndex, int nToMerge) {
+		if( (startIndex < 0) || (nToMerge < 0) )
+			throw new IllegalArgumentException("startIndex or nToMerge cannot be negative!");
+		
+		if( (startIndex + nToMerge) > array.length )
+			throw new IllegalArgumentException("Invalid nToMerge based on startIndex!");
+		
+		
 		int leftSize = nToMerge/2;
 		int rightSize = nToMerge - leftSize;
 		
