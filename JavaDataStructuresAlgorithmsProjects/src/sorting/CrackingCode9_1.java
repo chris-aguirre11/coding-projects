@@ -6,10 +6,10 @@ package sorting;
  * Write a method to merge B into A in sorted order.
  */
 public class CrackingCode9_1 {
-
+	
 	public static void main(String[] args) {
-		// Note: I can easily create a unit test but did not for this problem. 
-		// Examples of unit tests are in other classes in this workspace.
+		//TODO: Move this to a Unit Test
+		// Examples of unit tests are in many other classes in this workspace though.
 		
 		//First test
 		Integer[] arrayA = new Integer[12];
