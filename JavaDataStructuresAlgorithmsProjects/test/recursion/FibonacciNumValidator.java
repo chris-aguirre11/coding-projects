@@ -9,8 +9,8 @@ public class FibonacciNumValidator {
 
 	@Test
 	public void testGenerateFibNum() {
-		int fibonacciIndexToFind = 36;
+		int fibonacciIndexToFind = 23;
 		Assert.assertTrue("Fibonacci # generated for Fibonacci Index: " + fibonacciIndexToFind + 
-				" is incorrect", FibonacciNumGenerator.generateFibNum(36) == 14930352);
+				" is incorrect", FibonacciNumGenerator.generateFibNum(23) == 28657);
 	}
 }
